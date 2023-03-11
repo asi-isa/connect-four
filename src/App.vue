@@ -1,5 +1,7 @@
-<script setup></script>
+<script setup>
+import Menu from "./pages/Menu.vue";
+</script>
 
 <template>
-  <p class="text-3xl">hello vue</p>
+  <Menu />
 </template>
