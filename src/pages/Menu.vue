@@ -10,12 +10,13 @@ import MenuButton from "../components/MenuButton.vue";
     <div class="flex flex-col gap-3">
       <MenuButton
         title="play vs AI"
-        color="bg-[var(--accent-red)]"
+        color="text-[var(--accent-white)]"
+        bg="bg-[var(--accent-red)]"
         to="/game"
       />
       <MenuButton
         title="play vs player"
-        color="bg-[var(--accent-yellow)]"
+        bg="bg-[var(--accent-yellow)]"
         to="/game"
       />
       <MenuButton title="game rules" to="/game" />
