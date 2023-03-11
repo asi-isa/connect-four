@@ -1,4 +1,6 @@
-<script setup lang="ts">
+<script setup>
+import SmileIcon from "~icons/fa-regular/Smile";
+
 const props = defineProps({
   title: {
     type: String,
@@ -18,9 +20,15 @@ const props = defineProps({
 <template>
   <router-link
     :to="props.to"
-    class="p-2 rounded-md text-lg font-semibold uppercase text-[var(--black)] cursor-pointer shadow-lg"
+    class="flex items-center justify-between p-2 rounded-md cursor-pointer shadow-lg"
     :class="props.color"
   >
-    {{ props.title }}
+    <p class="text-lg font-semibold uppercase text-[var(--black)]">
+      {{ props.title }}
+    </p>
+    <div class="flex gap-1">
+      <i-cil-smile class="text-3xl text-[var(--black)]" />
+      <i-cil-smile class="text-3xl text-[var(--black)]" />
+    </div>
   </router-link>
 </template>
