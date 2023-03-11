@@ -3,5 +3,5 @@ import Menu from "./pages/Menu.vue";
 </script>
 
 <template>
-  <Menu />
+  <router-view></router-view>
 </template>

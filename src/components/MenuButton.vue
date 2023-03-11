@@ -4,6 +4,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  to: {
+    type: String,
+    required: true,
+  },
   color: {
     type: String,
     default: "bg-[var(--white)]",
@@ -12,10 +16,11 @@ const props = defineProps({
 </script>
 
 <template>
-  <div
+  <router-link
+    :to="props.to"
     class="p-2 rounded-md text-lg font-semibold uppercase text-[var(--black)] cursor-pointer shadow-lg"
     :class="props.color"
   >
     {{ props.title }}
-  </div>
+  </router-link>
 </template>
