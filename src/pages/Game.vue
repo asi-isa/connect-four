@@ -6,6 +6,10 @@ function onMenu() {
 function onRestart() {
   console.log("restart btn clicked");
 }
+
+function onSlotClicked(num) {
+  console.log(num);
+}
 </script>
 
 <template>
@@ -33,7 +37,7 @@ function onRestart() {
       />
     </div>
 
-    <Board />
+    <Board @slotClicked="onSlotClicked" />
 
     <div
       class="absolute bottom-0 left-0 right-0 h-1/3 bg-[var(--bg-dark)] rounded-t-[5rem] -z-10"

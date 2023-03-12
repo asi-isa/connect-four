@@ -2,6 +2,8 @@
 function onClick(n) {
   console.log(n);
 }
+
+defineEmits(["slotClicked"]);
 </script>
 
 <template>
@@ -9,7 +11,7 @@ function onClick(n) {
     class="flex flex-wrap justify-center gap-3 py-2 pb-6 rounded-2xl bg-[var(--white)]"
   >
     <template v-for="slotNum in 42">
-      <Slot @click="() => onClick(slotNum)" />
+      <Slot @click="$emit('slotClicked', slotNum)" />
     </template>
 
     <PlayerTurn />

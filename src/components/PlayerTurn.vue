@@ -2,11 +2,12 @@
 
 <template>
   <div
-    class="con w-48 h-40 flex flex-col justify-end items-center pb-3 absolute -bottom-[42%] before:bg-[var(--accent-red)]"
+    class="con w-48 h-40 flex flex-col justify-end items-center pb-5 absolute -bottom-36 before:bg-[var(--accent-red)]"
   >
     <p class="text-lg font-medium">PLAYER 1'S TURN</p>
     <p class="text-4xl font-semibold">15 S</p>
   </div>
+
   <svg
     class="absolute invisible"
     width="0"
@@ -29,6 +30,7 @@
   </svg>
 </template>
 
+<!-- https://dev.to/afif/css-shapes-with-rounded-corners-56h -->
 <style scoped>
 .con {
   filter: url(#round);
