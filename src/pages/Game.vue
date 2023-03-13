@@ -1,4 +1,10 @@
 <script setup>
+import { ref } from "vue";
+
+import ConnectFour from "../game";
+
+const game = ref(new ConnectFour());
+
 function onMenu() {
   console.log("menu btn clicked");
 }
@@ -9,6 +15,7 @@ function onRestart() {
 
 function onSlotClicked(num) {
   console.log(num);
+  game.value.play(num);
 }
 </script>
 
@@ -37,7 +44,7 @@ function onSlotClicked(num) {
       />
     </div>
 
-    <Board @slotClicked="onSlotClicked" />
+    <Board :board="game.board.fields" @slotClicked="onSlotClicked" />
 
     <div
       class="absolute bottom-0 left-0 right-0 h-1/3 bg-[var(--bg-dark)] rounded-t-[5rem] -z-10"
