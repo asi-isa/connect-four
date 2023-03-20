@@ -1,10 +1,19 @@
-<script setup></script>
+<script setup>
+const props = defineProps(["currentPlayer"]);
+</script>
 
 <template>
   <div
-    class="con w-48 h-40 flex flex-col justify-end items-center pb-5 absolute -bottom-36 before:bg-[var(--accent-red)]"
+    class="con w-48 h-40 flex flex-col justify-end items-center pb-5 absolute -bottom-36 before:transition-colors"
+    :class="[
+      props.currentPlayer.id === 1
+        ? 'before:bg-[var(--accent-red)]'
+        : 'before:bg-[var(--accent-yellow)]',
+    ]"
   >
-    <p class="text-lg font-medium">PLAYER 1'S TURN</p>
+    <p class="text-lg font-medium">
+      PLAYER {{ props.currentPlayer.id }}'S TURN
+    </p>
     <p class="text-4xl font-semibold">15 S</p>
   </div>
 

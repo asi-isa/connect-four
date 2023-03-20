@@ -32,19 +32,23 @@ function onSlotClicked(num) {
     <div class="flex gap-4 justify-evenly">
       <ScoreCard
         name="PLAYER 1"
-        points="33"
+        :points="game.player1.points"
         color="bg-[var(--accent-red)]"
         align-icon="left"
       />
       <ScoreCard
         name="PLAYER 2"
-        points="42"
+        :points="game.player2.points"
         color="bg-[var(--accent-yellow)]"
         align-icon="right"
       />
     </div>
 
-    <Board :board="game.board.fields" @slotClicked="onSlotClicked" />
+    <Board
+      :board="game.board.fields"
+      :currentPlayer="game.currentPlayer"
+      @slotClicked="onSlotClicked"
+    />
 
     <div
       class="absolute bottom-0 left-0 right-0 h-1/3 bg-[var(--bg-dark)] rounded-t-[5rem] -z-10"

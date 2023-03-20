@@ -28,13 +28,13 @@ class ConnectFour {
         const gameOver = this.checkFourConnected();
 
         if (gameOver) {
-          // TODO logic
-          console.log("we have a winner", this.currentPlayer.id);
-          break;
-        } else {
-          this.switchPlayer();
-          break;
+          this.currentPlayer.addPoint();
+          this.board.clear();
         }
+
+        this.switchPlayer();
+
+        break;
       }
     }
   }
@@ -148,13 +148,20 @@ class Player {
     this.id = id;
     this.points = 0;
   }
+
+  addPoint() {
+    this.points += 1;
+  }
 }
 
-// TODO necessary?
 class Board {
   fields: number[];
 
   constructor() {
+    this.fields = new Array(42);
+  }
+
+  clear() {
     this.fields = new Array(42);
   }
 }

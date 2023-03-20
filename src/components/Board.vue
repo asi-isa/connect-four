@@ -1,5 +1,5 @@
 <script setup>
-const props = defineProps(["board"]);
+const props = defineProps(["board", "currentPlayer"]);
 
 defineEmits(["slotClicked"]);
 
@@ -16,6 +16,6 @@ function onClick(n) {
       <Slot :color="slot" @click="$emit('slotClicked', index)" />
     </template>
 
-    <PlayerTurn />
+    <PlayerTurn :currentPlayer="props.currentPlayer" />
   </div>
 </template>
