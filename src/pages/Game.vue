@@ -4,19 +4,12 @@ import { ref } from "vue";
 import Modal from "../components/Modal.vue";
 import ConnectFour from "../game";
 
-const game = ref(ConnectFour.new(onGameOver));
-
-const gameOver = ref(false);
+const game = ref(new ConnectFour());
 
 // TODO start programmatically
 game.value.start();
 
-function onGameOver() {
-  gameOver.value = true;
-}
-
 function onContinue() {
-  gameOver.value = false;
   game.value.continue();
 }
 
@@ -66,8 +59,7 @@ function onSlotClicked(num) {
   </div>
 
   <Teleport to="body">
-    <!-- use the modal component, pass in the prop -->
-    <modal :show="gameOver">
+    <modal :show="game.isGameOver()">
       <template #header>
         <p>Game is over.</p>
       </template>
