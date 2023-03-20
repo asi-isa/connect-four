@@ -1,19 +1,37 @@
-class ConnectFour {
+import Player from "./Player";
+import Board from "./Board";
+import Timer from "./Timer";
+
+export default class ConnectFour {
   private static NUM_COLS = 7;
-  private static NUM_ROWS = 6;
-  private static NUM_SLOTS = this.NUM_COLS * this.NUM_ROWS;
   private static COLUMN_TO_SLOTS_IN_COLUMN = ConnectFour.calculateLookupTable();
 
   player1: Player;
   player2: Player;
   currentPlayer: Player;
+  onGameOver: () => void;
   board: Board;
+  timer: Timer;
 
-  constructor() {
+  static new(onGameOver: () => void) {
+    return new ConnectFour().setOnGameOver(onGameOver);
+  }
+
+  private constructor() {
     this.player1 = new Player(1);
     this.player2 = new Player(2);
     this.currentPlayer = this.player1;
     this.board = new Board();
+  }
+
+  start() {
+    const onTimerEnd = () => {
+      this.playRandom();
+      this.timer.restart();
+    };
+
+    this.timer = Timer.new(onTimerEnd);
+    this.timer.start();
   }
 
   play(slotNum: number) {
@@ -21,22 +39,46 @@ class ConnectFour {
 
     const columnSlots = ConnectFour.COLUMN_TO_SLOTS_IN_COLUMN.get(col)!;
 
-    for (const colSlot of columnSlots) {
-      if (this.board.fields[colSlot] === undefined) {
-        this.board.fields[colSlot] = this.currentPlayer.id;
+    for (const slot of columnSlots) {
+      if (this.board.slotIsEmpty(slot)) {
+        this.board.set(slot, this.currentPlayer.id);
 
-        const gameOver = this.checkFourConnected();
+        const gameOver = this.board.checkFourConnected();
 
         if (gameOver) {
-          this.currentPlayer.addPoint();
-          this.board.clear();
-        }
+          this.timer.stop();
 
-        this.switchPlayer();
+          this.currentPlayer.addPoint();
+
+          this.onGameOver();
+        } else {
+          this.switchPlayer();
+          this.timer.restart();
+        }
 
         break;
       }
     }
+  }
+
+  continue() {
+    this.board.clear();
+
+    // alternate who starts
+    const overallPoints = this.player1.points + this.player2.points;
+
+    this.currentPlayer = overallPoints % 2 === 0 ? this.player1 : this.player2;
+
+    this.timer.restart();
+  }
+
+  private playRandom() {
+    const freeSlots = this.board.getFreeSlots();
+
+    // select slot randomly
+    const slot = freeSlots[Math.floor(Math.random() * freeSlots.length)];
+
+    this.play(slot);
   }
 
   private switchPlayer() {
@@ -44,81 +86,9 @@ class ConnectFour {
       this.currentPlayer.id === 1 ? this.player2 : this.player1;
   }
 
-  // TODO test
-  private checkFourConnected(): boolean {
-    return (
-      this.checkFourConnectedInRow() ||
-      this.checkFourConnectedInCol() ||
-      this.checkFourConnectedDiag()
-    );
-  }
-
-  private checkFourConnectedInRow(): boolean {
-    for (let i = 0; i <= ConnectFour.NUM_SLOTS - 4; i++) {
-      if (this.checkAdjacentFour(i, "row")) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  private checkFourConnectedInCol(): boolean {
-    for (let i = 0; i <= 20; i++) {
-      if (this.checkAdjacentFour(i, "col")) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  private checkFourConnectedDiag(): boolean {
-    return (
-      this._checkFourConnectedDiagBF("diagLeft") ||
-      this._checkFourConnectedDiagBF("diagRight")
-    );
-  }
-
-  // TODO test and rewrite more efficiently
-  private _checkFourConnectedDiagBF(
-    direction: "diagLeft" | "diagRight"
-  ): boolean {
-    for (let i = 0; i < ConnectFour.NUM_SLOTS; i++) {
-      try {
-        if (this.checkAdjacentFour(i, direction)) {
-          return true;
-        }
-      } catch (error) {
-        continue;
-      }
-    }
-
-    return false;
-  }
-
-  private checkAdjacentFour(
-    i: number,
-    direction: "row" | "col" | "diagLeft" | "diagRight"
-  ): boolean {
-    let step: number;
-
-    if (direction === "row") {
-      step = 1;
-    } else if (direction === "col") {
-      step = 7;
-    } else if (direction === "diagLeft") {
-      step = 6;
-    } else {
-      step = 8;
-    }
-
-    return (
-      this.board.fields[i] === this.currentPlayer.id &&
-      this.board.fields[i + step] === this.currentPlayer.id &&
-      this.board.fields[i + step * 2] === this.currentPlayer.id &&
-      this.board.fields[i + step * 3] === this.currentPlayer.id
-    );
+  private setOnGameOver(onGameOver: () => void) {
+    this.onGameOver = onGameOver;
+    return this;
   }
 
   private static calculateLookupTable() {
@@ -139,31 +109,3 @@ class ConnectFour {
     return columnToSlotsInColumn;
   }
 }
-
-class Player {
-  id: number;
-  points: number;
-
-  constructor(id: number) {
-    this.id = id;
-    this.points = 0;
-  }
-
-  addPoint() {
-    this.points += 1;
-  }
-}
-
-class Board {
-  fields: number[];
-
-  constructor() {
-    this.fields = new Array(42);
-  }
-
-  clear() {
-    this.fields = new Array(42);
-  }
-}
-
-export default ConnectFour;

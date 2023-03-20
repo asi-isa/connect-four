@@ -1,20 +1,20 @@
 <script setup>
-const props = defineProps(["currentPlayer"]);
+const props = defineProps(["game"]);
 </script>
 
 <template>
   <div
     class="con w-48 h-40 flex flex-col justify-end items-center pb-5 absolute -bottom-36 before:transition-colors"
     :class="[
-      props.currentPlayer.id === 1
+      props.game.currentPlayer.id === 1
         ? 'before:bg-[var(--accent-red)]'
         : 'before:bg-[var(--accent-yellow)]',
     ]"
   >
     <p class="text-lg font-medium">
-      PLAYER {{ props.currentPlayer.id }}'S TURN
+      PLAYER {{ props.game.currentPlayer.id }}'S TURN
     </p>
-    <p class="text-4xl font-semibold">15 S</p>
+    <p class="text-4xl font-semibold">{{ props.game.timer.countdown }} S</p>
   </div>
 
   <svg

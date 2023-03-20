@@ -1,5 +1,5 @@
 <script setup>
-const props = defineProps(["board", "currentPlayer"]);
+const props = defineProps(["game"]);
 
 defineEmits(["slotClicked"]);
 
@@ -12,10 +12,13 @@ function onClick(n) {
   <div
     class="flex flex-wrap justify-center gap-3 py-2 pb-6 rounded-2xl bg-[var(--white)]"
   >
-    <template v-for="(slot, index) in props.board" :key="`${index}-${slot}`">
+    <template
+      v-for="(slot, index) in props.game.board.fields"
+      :key="`${index}-${slot}`"
+    >
       <Slot :color="slot" @click="$emit('slotClicked', index)" />
     </template>
 
-    <PlayerTurn :currentPlayer="props.currentPlayer" />
+    <PlayerTurn :game="props.game" />
   </div>
 </template>
