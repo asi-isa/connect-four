@@ -27,14 +27,16 @@ export default class ConnectFour {
   start() {
     const onTimerEnd = () => {
       this.playRandom();
-      this.timer.restart();
     };
 
     this.timer = Timer.new(onTimerEnd);
+
     this.timer.start();
   }
 
   play(slotNum: number) {
+    this.timer.stop();
+
     const col = slotNum % ConnectFour.NUM_COLS;
 
     const columnSlots = ConnectFour.COLUMN_TO_SLOTS_IN_COLUMN.get(col)!;
@@ -46,8 +48,6 @@ export default class ConnectFour {
         const gameOver = this.board.checkFourConnected();
 
         if (gameOver) {
-          this.timer.stop();
-
           this.currentPlayer.addPoint();
 
           this.onGameOver();

@@ -1,6 +1,6 @@
 export default class Timer {
   private static SECOND = 1000;
-  private static COUNTDOWN = 10;
+  private static COUNTDOWN = 33;
 
   countdown: number;
   onEnd: () => void;
