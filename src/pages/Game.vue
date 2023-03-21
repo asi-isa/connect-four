@@ -17,12 +17,8 @@ function onContinue() {
   game.value.continue();
 }
 
-function onMenu() {
-  console.log("menu btn clicked");
-}
-
 function onRestart() {
-  console.log("restart btn clicked");
+  game.value.restart();
 }
 
 function onSlotClicked(num) {
@@ -37,7 +33,7 @@ function goHome() {
 <template>
   <div class="flex flex-col gap-10 px-2 py-8 h-screen">
     <div class="flex items-center justify-between">
-      <Btn title="menu" @click="onMenu" />
+      <Btn title="menu" @click="goHome" />
 
       <Logo />
 

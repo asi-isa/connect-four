@@ -22,6 +22,15 @@ export default class ConnectFour {
     this.board = new Board();
   }
 
+  restart() {
+    this.player1 = new Player(1);
+    this.player2 = new Player(2);
+    this.currentPlayer = this.player1;
+    this.board = new Board();
+    this.gameOver = false;
+    this.timer.restart();
+  }
+
   start() {
     const onTimerEnd = () => {
       this.playRandom();
