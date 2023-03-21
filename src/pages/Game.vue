@@ -1,10 +1,14 @@
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+import Button from "../components/Button.vue";
 
 import Modal from "../components/Modal.vue";
 import ConnectFour from "../game";
 
 const game = ref(new ConnectFour());
+
+const router = useRouter();
 
 // TODO start programmatically
 game.value.start();
@@ -23,6 +27,10 @@ function onRestart() {
 
 function onSlotClicked(num) {
   game.value.play(num);
+}
+
+function goHome() {
+  router.replace("/");
 }
 </script>
 
@@ -60,15 +68,11 @@ function onSlotClicked(num) {
 
   <Teleport to="body">
     <modal :show="game.isGameOver()">
-      <template #header>
-        <p>Game is over.</p>
-      </template>
+      <template #header>Game Over</template>
 
       <template #body>
-        <div>
-          <p @click="onContinue">continue</p>
-          <p>exit</p>
-        </div>
+        <Button title="Continue" @click="onContinue" bg="red" />
+        <Button title="Exit" @click="goHome" bg="yellow" />
       </template>
     </modal>
   </Teleport>

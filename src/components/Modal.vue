@@ -1,6 +1,4 @@
 <script setup>
-// TODO style
-
 const props = defineProps({
   show: Boolean,
 });
@@ -8,47 +6,24 @@ const props = defineProps({
 
 <template>
   <Transition name="modal">
-    <div v-if="show" class="modal-mask">
-      <div class="modal-container">
-        <div class="modal-header">
-          <slot name="header">default header</slot>
-        </div>
+    <div
+      v-if="show"
+      class="fixed z-20 inset-0 bg-black/50 flex transition duration-300"
+    >
+      <div
+        class="modal-container w-72 m-auto p-4 bg-[var(--bg-dark)] rounded-2xl shadow-lg transition-all duration-300 flex flex-col gap-6"
+      >
+        <p class="text-lg font-semibold">
+          <slot name="header"></slot>
+        </p>
 
-        <div class="modal-body">
-          <slot name="body">default body</slot>
-        </div>
+        <slot name="body"></slot>
       </div>
     </div>
   </Transition>
 </template>
 
 <style>
-.modal-mask {
-  position: fixed;
-  z-index: 9998;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  transition: opacity 0.3s ease;
-}
-
-.modal-container {
-  width: 300px;
-  margin: auto;
-  padding: 20px 30px;
-  background-color: #fff;
-  border-radius: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
-  transition: all 0.3s ease;
-}
-
-.modal-body {
-  color: black;
-}
-
 /*
  * The following styles are auto-applied to elements with
  * transition="modal" when their visibility is toggled
