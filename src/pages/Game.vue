@@ -6,12 +6,18 @@ import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
 import ConnectFour from "../game";
 
-const game = ref(new ConnectFour());
-
 const router = useRouter();
 
+const game = ref(new ConnectFour());
+
+const gameNotStarted = ref(true);
+
 // TODO start programmatically
-game.value.start();
+
+function onStart() {
+  gameNotStarted.value = false;
+  game.value.start();
+}
 
 function onContinue() {
   game.value.continue();
@@ -40,23 +46,24 @@ function goHome() {
       <Btn title="restart" @click="onRestart" />
     </div>
 
-    <div class="flex gap-4 justify-evenly">
-      <ScoreCard
-        name="PLAYER 1"
-        :points="game.player1.points"
-        color="bg-[var(--accent-red)]"
-        align-icon="left"
-      />
-      <ScoreCard
-        name="PLAYER 2"
-        :points="game.player2.points"
-        color="bg-[var(--accent-yellow)]"
-        align-icon="right"
-      />
-    </div>
+    <template v-if="!gameNotStarted">
+      <div class="flex gap-4 justify-evenly">
+        <ScoreCard
+          name="PLAYER 1"
+          :points="game.player1.points"
+          color="bg-[var(--accent-red)]"
+          align-icon="left"
+        />
+        <ScoreCard
+          name="PLAYER 2"
+          :points="game.player2.points"
+          color="bg-[var(--accent-yellow)]"
+          align-icon="right"
+        />
+      </div>
 
-    <Board :game="game" @slotClicked="onSlotClicked" />
-
+      <Board :game="game" @slotClicked="onSlotClicked" />
+    </template>
     <div
       class="absolute bottom-0 left-0 right-0 h-1/3 bg-[var(--bg-dark)] rounded-t-[5rem] -z-10"
     />
@@ -69,6 +76,16 @@ function goHome() {
       <template #body>
         <Button title="Continue" @click="onContinue" bg="red" />
         <Button title="Exit" @click="goHome" bg="yellow" />
+      </template>
+    </modal>
+  </Teleport>
+
+  <Teleport to="body">
+    <modal :show="gameNotStarted">
+      <template #header>Lets Play</template>
+
+      <template #body>
+        <Button title="Start" @click="onStart" bg="red" />
       </template>
     </modal>
   </Teleport>
