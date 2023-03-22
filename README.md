@@ -1,29 +1,17 @@
 # connect-four
 
-This template should help get you started developing with Vue 3 in Vite.
+Connect Four game implemented with Vuejs.
 
-## Recommended IDE Setup
+🚧 Work in progess.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## Screenshots
 
-## Customize configuration
+![Image](./public/cf1.png)
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+## Preview
 
-## Project Setup
+[Connect Four](https://connect-four-tau.vercel.app/)
 
-```sh
-npm install
-```
+## Design
 
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+[frontendmentor.io](https://www.frontendmentor.io/challenges/connect-four-game-6G8QVH923s)

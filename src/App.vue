@@ -1,7 +1,5 @@
-<script setup>
-import Menu from "./pages/Menu.vue";
-</script>
-
 <template>
-  <router-view></router-view>
+  <div class="w-96 m-auto">
+    <router-view></router-view>
+  </div>
 </template>
