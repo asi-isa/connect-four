@@ -2,8 +2,6 @@
 
 Connect Four game implemented with Vuejs.
 
-🚧 Work in progess.
-
 ## Screenshots
 
 ![Image](./public/cf1.png)
